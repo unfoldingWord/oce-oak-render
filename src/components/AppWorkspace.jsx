@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { PrintModal, useUsfmPreviewRenderer } from '@oce-editor-tools/core'
+import { useUsfmPreviewRenderer } from '@oce-editor-tools/base'
+import { PrintModal } from '@oce-editor-tools/mui-core'
 import DOMPurify from 'dompurify'
-import markup from '../lib/drawdown'
+import markdown from '../lib/drawdown'
 import { fileOpen } from 'browser-fs-access'
 import { styled } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
@@ -38,7 +39,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function AppWorkspace() {
   const theme = useTheme()
-  const [markupHtmlStr, setMarkupHtmlStr] = useState("")
+  const [markdownHtmlStr, setMarkdownHtmlStr] = useState("")
   const [drawerOpen, setDrawerOpen] = React.useState(false)
   const [isOpen,setIsOpen] = useState(false)
   const [mdFileLoaded, setMdFileLoaded] = useState(false)
@@ -56,7 +57,7 @@ export default function AppWorkspace() {
   const handleOpen = async () => {
     const file = await fileOpen([
       {
-        description: 'USFM and Markup - text files',
+        description: 'USFM and Markdown - text files',
         mimeTypes: ['text/*'],
         extensions: ['.md','.usfm'],
       }
@@ -66,7 +67,7 @@ export default function AppWorkspace() {
       const extStr = filePath?.substring(filePath?.lastIndexOf("."))
       if (extStr === ".md") {
         const contents = await file.text()
-        setMarkupHtmlStr(markup(contents))
+        setMarkdownHtmlStr(markdown(contents))
         setUsfmFileLoaded(false)
         setMdFileLoaded(true)
       } else if (extStr === ".usfm") {
@@ -90,7 +91,7 @@ export default function AppWorkspace() {
       console.log('closePrintModal')
       setIsOpen(false)
     },
-    onRenderContent: () => markupHtmlStr,
+    onRenderContent: () => markdownHtmlStr,
   }
 
   const { 
@@ -115,7 +116,7 @@ export default function AppWorkspace() {
   const appBarAndWorkSpace = 
     <div style={{paddingTop: '100px'}}>
         { mdFileLoaded && <PrintModal {...mdPreviewProps} />}
-        { mdFileLoaded && (<div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(markupHtmlStr)}}/>)}
+        { mdFileLoaded && (<div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(markdownHtmlStr)}}/>)}
         { usfmFileLoaded && <PrintModal {...usfmPreviewProps} />}
         { usfmFileLoaded && (htmlReady ? <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(renderedData)}}/>: "Loading") }
     </div>
