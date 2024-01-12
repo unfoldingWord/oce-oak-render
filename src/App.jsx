@@ -1,8 +1,7 @@
-import AppWorkspace from './components/AppWorkspace'
-import './App.css'
+import AppLayout from './components/AppLayout'
 
 function App() {
-  return <AppWorkspace />
+  return <AppLayout />
 }
 
 export default App
