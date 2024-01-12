@@ -1,59 +1,29 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
 import { useUsfmPreviewRenderer } from '@oce-editor-tools/base'
 import { PrintModal } from '@oce-editor-tools/mui-core'
 import DOMPurify from 'dompurify'
 import markdown from '../lib/drawdown'
 import { fileOpen } from 'browser-fs-access'
-import { styled } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import MenuIcon from '@mui/icons-material/Menu'
 import PrintIcon from '@mui/icons-material/Print'
 import Paper from '@mui/material/Paper'
 import { ThemeProvider } from '@mui/material/styles'
-import Drawer from '@mui/material/Drawer'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import { getRtlPreviewStyle } from "../lib/previewStyling.js";
 
-const drawerWidth = 240
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}))
 
 export default function AppWorkspace() {
   const theme = useTheme()
   const [markdownHtmlStr, setMarkdownHtmlStr] = useState("")
-  const [drawerOpen, setDrawerOpen] = React.useState(false)
   const [isOpen,setIsOpen] = useState(false)
   const [mdFileLoaded, setMdFileLoaded] = useState(false)
   const [usfmText, setUsfmText] = useState()
   const [usfmFileLoaded, setUsfmFileLoaded] = useState(false)
-
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false)
-  }
 
   const handleOpen = async () => {
     const file = await fileOpen([
@@ -130,16 +100,6 @@ export default function AppWorkspace() {
       <Paper sx={{ position: 'fixed', top: 0, left: 0, right: 0 }} elevation={3}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              onClick={handleDrawerOpen}
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography
               variant="h6"
               noWrap
@@ -182,44 +142,6 @@ export default function AppWorkspace() {
             </Search> */}
           </Toolbar>
         </AppBar>
-        <Drawer
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box',
-            },
-          }}
-          variant="persistent"
-          anchor="left"
-          open={drawerOpen}
-        >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            <ListItem key={'Open'} disablePadding>
-              <ListItemButton onClick={handleOpen}>
-                <ListItemIcon>
-                  <FolderOpenIcon/> : 
-                </ListItemIcon>
-                <ListItemText primary={'Open'} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem key={'Print Preview'} disablePadding>
-              <ListItemButton onClick={handlePrintPreviewClick}>
-                <ListItemIcon>
-                  <PrintIcon/>
-                </ListItemIcon>
-                <ListItemText primary={'Print Preview'} />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Drawer>
       </Paper>
       {appBarAndWorkSpace}
     </Box>
