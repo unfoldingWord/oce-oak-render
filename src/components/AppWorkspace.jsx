@@ -25,6 +25,7 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { getRtlPreviewStyle } from "../lib/previewStyling.js";
 
 const drawerWidth = 240
 
@@ -99,7 +100,8 @@ export default function AppWorkspace() {
     ready: htmlReady 
   } = useUsfmPreviewRenderer({ 
     usfmText, 
-    htmlRender: true
+    htmlRender: true,
+    renderStyles: getRtlPreviewStyle(),
   })
 
   const usfmPreviewProps = {
