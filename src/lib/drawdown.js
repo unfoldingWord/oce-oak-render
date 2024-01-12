@@ -129,6 +129,6 @@ function markdown(src) {
   replace(rx_stash, function(all) { return stash[parseInt(all)] });
 
   return src.trim();
-};
+}
 
 export default markdown
