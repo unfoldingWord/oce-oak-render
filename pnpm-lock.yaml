@@ -41,6 +41,9 @@ dependencies:
   dompurify:
     specifier: ^3.0.5
     version: 3.0.5
+  epitelete-html:
+    specifier: 0.2.20-beta.8
+    version: 0.2.20-beta.8
   lodash:
     specifier: 4.17.21
     version: 4.17.21
@@ -3391,6 +3394,18 @@ packages:
   /entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
+    dev: false
+
+  /epitelete-html@0.2.20-beta.8:
+    resolution: {integrity: sha512-0RfchvtezeszthSJBFn7uo7BGyl4lvqyokCKACFl2yKdI6BX6m6oZt4wD5+FiusdW5ESWB/07+vH6bQ5HAxrqw==}
+    dependencies:
+      '@babel/core': 7.23.7
+      base-64: 1.0.0
+      epitelete: 0.2.20
+      node-html-parser: 5.4.2
+      pure-uuid: 1.8.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /epitelete-html@0.2.21-beta.2:
